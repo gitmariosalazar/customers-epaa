@@ -1,0 +1,21 @@
+[submodule "client-gateway"]
+	path = client-gateway
+	url = https://github.com/gitmariosalazar/epaa-gateway.git
+[submodule "qrcode"]
+	path = qrcode
+	url = https://github.com/gitmariosalazar/qrcode.git
+[submodule "authentication"]
+	path = authentication
+	url = https://github.com/gitmariosalazar/auth-epaa.git
+[submodule "readings"]
+	path = readings
+	url = https://github.com/gitmariosalazar/readings.git
+[submodule "epaa-database-legacy"]
+	path = epaa-database-legacy
+	url = https://github.com/gitmariosalazar/epaa-databse-legacy.git
+[submodule "property"]
+	path = property
+	url = https://github.com/gitmariosalazar/property.git
+[submodule "clients"]
+	path = clients
+	url = https://github.com/gitmariosalazar/customers-epaa.git
