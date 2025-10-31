@@ -2,6 +2,7 @@ import { Controller, Delete, Get, Post, Put } from '@nestjs/common';
 import { CustomerService } from '../../application/services/customer.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { CreateCustomerRequest } from '../../domain/schemas/dto/request/create.customer.request';
+import { UpdateCustomerRequest } from '../../domain/schemas/dto/request/update.customer.request';
 
 @Controller('customers')
 export class CustomerController {
@@ -15,7 +16,7 @@ export class CustomerController {
 
   @Put('update-customer/:customerId')
   @MessagePattern('customers.update-customer')
-  async updateCustomer(@Payload() data: { customerId: string; customer: any }) {
+  async updateCustomer(@Payload() data: { customerId: string; customer: UpdateCustomerRequest }) {
     return this.customerService.updateCustomer(data.customerId, data.customer);
   }
 
