@@ -1,9 +1,10 @@
-import { Module } from "@nestjs/common";
-import { PostgreSQLCustomerModule } from "../../modules/customers/infrastructure/modules/postgresql/postgresql.customer.module";
+import { Module } from '@nestjs/common';
+import { PostgreSQLCustomerModule } from '../../modules/customers/infrastructure/modules/postgresql/postgresql.customer.module';
+import { PostgreSQLCompanyModule } from '../../modules/company/infrastructure/modules/postgresql/postgresql.company.module';
 @Module({
-  imports: [PostgreSQLCustomerModule],
+  imports: [PostgreSQLCustomerModule, PostgreSQLCompanyModule],
   controllers: [],
   providers: [],
-  exports: []
+  exports: [],
 })
-export class AppCustomersModulesUsingPostgreSQL { }
+export class AppCustomersModulesUsingPostgreSQL {}

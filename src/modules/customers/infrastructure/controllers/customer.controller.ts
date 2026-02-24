@@ -6,7 +6,7 @@ import { UpdateCustomerRequest } from '../../domain/schemas/dto/request/update.c
 
 @Controller('customers')
 export class CustomerController {
-  constructor(private readonly customerService: CustomerService) { }
+  constructor(private readonly customerService: CustomerService) {}
 
   @Post('create-customer')
   @MessagePattern('customers.create-customer')
@@ -16,7 +16,9 @@ export class CustomerController {
 
   @Put('update-customer/:customerId')
   @MessagePattern('customers.update-customer')
-  async updateCustomer(@Payload() data: { customerId: string; customer: UpdateCustomerRequest }) {
+  async updateCustomer(
+    @Payload() data: { customerId: string; customer: UpdateCustomerRequest },
+  ) {
     return this.customerService.updateCustomer(data.customerId, data.customer);
   }
 
@@ -45,5 +47,16 @@ export class CustomerController {
   @MessagePattern('customers.verify-customer-exists')
   async verifyCustomerExists(@Payload() customerId: string) {
     return this.customerService.verifyCustomerExists(customerId);
+  }
+
+  @Get('get-general-customers')
+  @MessagePattern('customers.get-general-customers')
+  async getGeneralCustomers(
+    @Payload() data: { limit?: number; offset?: number },
+  ) {
+    const limit = data?.limit ?? 100;
+    const offset = data?.offset ?? 0;
+
+    return await this.customerService.getGeneralCustomers(limit, offset);
   }
 }
