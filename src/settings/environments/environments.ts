@@ -8,6 +8,7 @@ interface EnvironmentsVariables {
   DATABASE_USER: string;
   DATABASE_PASSWORD: string;
   DATABASE_NAME: string;
+  DATABASE_TYPE: 'mysql' | 'postgres';
   DEBUG: boolean;
   ALLOWED_HOSTS: string;
   SECRET_KEY: string;
@@ -29,6 +30,7 @@ const environmentsSchema = Joi.object<EnvironmentsVariables>({
   DATABASE_USER: Joi.string().required(),
   DATABASE_PASSWORD: Joi.string().required(),
   DATABASE_NAME: Joi.string().required(),
+  DATABASE_TYPE: Joi.string().valid('mysql', 'postgres').default('postgres'),
   DEBUG: Joi.boolean().default(false),
   ALLOWED_HOSTS: Joi.string().required(),
   SECRET_KEY: Joi.string().required(),
@@ -38,7 +40,7 @@ const environmentsSchema = Joi.object<EnvironmentsVariables>({
   CLIENTS_KAFKA_GROUP_ID: Joi.string().required(),
   CLIENTS_KAFKA_CLIENT: Joi.string().required(),
   KAFKA_BROKER_INTERNAL: Joi.string().required(),
-  KAFKA_BROKER_EXTERNAL: Joi.string().required()
+  KAFKA_BROKER_EXTERNAL: Joi.string().required(),
 }).unknown(true);
 
 const { error, value: envVars } = environmentsSchema.validate(process.env);
@@ -54,14 +56,16 @@ export const environments: EnvironmentsVariables = {
   DATABASE_USER: envVars.DATABASE_USER,
   DATABASE_PASSWORD: envVars.DATABASE_PASSWORD,
   DATABASE_NAME: envVars.DATABASE_NAME,
+  DATABASE_TYPE: envVars.DATABASE_TYPE,
   DEBUG: envVars.DEBUG === true,
   ALLOWED_HOSTS: envVars.ALLOWED_HOSTS,
   SECRET_KEY: envVars.SECRET_KEY,
-  KAFKA_BROKER_URL: envVars.KAFKA_BROKER_INTERNAL || envVars.KAFKA_BROKER_EXTERNAL,
+  KAFKA_BROKER_URL:
+    envVars.KAFKA_BROKER_INTERNAL || envVars.KAFKA_BROKER_EXTERNAL,
   KAFKA_TOPIC: envVars.KAFKA_TOPIC,
   CLIENTS_KAFKA_CLIENT_ID: envVars.CLIENTS_KAFKA_CLIENT_ID,
   CLIENTS_KAFKA_GROUP_ID: envVars.CLIENTS_KAFKA_GROUP_ID,
   CLIENTS_KAFKA_CLIENT: envVars.CLIENTS_KAFKA_CLIENT,
   KAFKA_BROKER_EXTERNAL: envVars.KAFKA_BROKER_EXTERNAL,
-  KAFKA_BROKER_INTERNAL: envVars.KAFKA_BROKER_INTERNAL
+  KAFKA_BROKER_INTERNAL: envVars.KAFKA_BROKER_INTERNAL,
 };

@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { CustomerController } from '../../controllers/customer.controller';
 import { CustomerService } from '../../../application/services/customer.service';
 import { KafkaServiceModule } from '../../../../../shared/kafka/kafka-service.module';
-import { PostgresqlCustomerPersistence } from '../../repositories/postgresql/persistence/postgresql.customer.persistence';
+import { MySQLCustomerPersistence } from '../../repositories/mysql/persistence/mysql.customer.persistence';
 
 @Module({
   imports: [KafkaServiceModule],
@@ -11,9 +11,9 @@ import { PostgresqlCustomerPersistence } from '../../repositories/postgresql/per
     CustomerService,
     {
       provide: 'CustomerRepository',
-      useClass: PostgresqlCustomerPersistence,
+      useClass: MySQLCustomerPersistence,
     },
   ],
   exports: [],
 })
-export class PostgreSQLCustomerModule {}
+export class MySQLCustomerModule {}

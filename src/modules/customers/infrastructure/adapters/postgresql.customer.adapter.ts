@@ -1,11 +1,11 @@
 import {
   CustomerResponse,
   GeneralCustomerResponse,
-} from '../../../../domain/schemas/dto/response/customer.response';
+} from '../../domain/schemas/dto/response/customer.response';
 import {
   CustomerSqlResponse,
   GeneralCustomerSqlResponse,
-} from '../../../interfaces/sql/customer.sql.response';
+} from '../interfaces/sql/customer.sql.response';
 
 export class CustomerAdapter {
   static fromCustomerSQLResponseToCustomerResponse(
@@ -25,7 +25,7 @@ export class CustomerAdapter {
       originCountry: customer.originCountry,
       identificationType: customer.identificationType,
       parishId: customer.parishId,
-      deceased: customer.deceased,
+      deceased: customer.deceased === true || customer.deceased === 1, // Convert to boolean if it's a number
     };
   }
 

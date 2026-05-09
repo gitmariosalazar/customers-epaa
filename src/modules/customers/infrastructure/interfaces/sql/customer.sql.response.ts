@@ -12,7 +12,7 @@ export interface CustomerSqlResponse {
   originCountry: string;
   identificationType: string;
   parishId: string;
-  deceased?: boolean;
+  deceased?: boolean | null | number;
 }
 
 export interface GeneralCustomerSqlResponse {
