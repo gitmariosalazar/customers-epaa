@@ -6,6 +6,8 @@ import { environments } from './settings/environments/environments';
 import * as morgan from 'morgan';
 import { DatabaseAbstract } from './shared/connections/database/abstract/abstract.database';
 
+import { CustomServerKafka } from './shared/kafka/custom-server-kafka';
+
 async function bootstrap() {
   const logger: Logger = new Logger('QRCodeMain');
 
@@ -22,17 +24,19 @@ async function bootstrap() {
   );
 
   const microservice = await NestFactory.createMicroservice(AppModule, {
-    transport: Transport.KAFKA,
-    options: {
-      client: {
-        clientId: environments.CLIENTS_KAFKA_CLIENT_ID,
-        brokers: [environments.KAFKA_BROKER_URL],
+    strategy: new CustomServerKafka(
+      {
+        client: {
+          clientId: environments.CLIENTS_KAFKA_CLIENT_ID,
+          brokers: [environments.KAFKA_BROKER_URL],
+        },
+        consumer: {
+          groupId: environments.CLIENTS_KAFKA_GROUP_ID,
+          allowAutoTopicCreation: true,
+        },
       },
-      consumer: {
-        groupId: environments.CLIENTS_KAFKA_GROUP_ID,
-        allowAutoTopicCreation: true,
-      },
-    },
+      environments.KAFKA_TOPIC, // clients_topic
+    ),
   });
 
   await microservice.listen();
